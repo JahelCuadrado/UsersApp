@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.usersapp.databinding.ActivityMainBinding
 
 
-class MainActivity : AppCompatActivity(), OnClickListener {
+class MainActivity : AppCompatActivity() {
 
     private lateinit var userAdapter         : UserAdapter
     private lateinit var linearLayoutManager : RecyclerView.LayoutManager
@@ -19,7 +19,9 @@ class MainActivity : AppCompatActivity(), OnClickListener {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        userAdapter = UserAdapter(this, getUsers(), this)
+        userAdapter = UserAdapter(this, getUsers()){ user, position -> //TODO
+            Toast.makeText(this, "${position+1}: " + user.name, Toast.LENGTH_SHORT).show();
+        }
         linearLayoutManager = LinearLayoutManager(this)
 
         binding.reciclerView.apply {
@@ -32,10 +34,10 @@ class MainActivity : AppCompatActivity(), OnClickListener {
     private fun getUsers() : MutableList<User>{
         val users = mutableListOf<User>()
 
-        val alain = User(1, "Alain", "Nicolás", "https://frogames.es/wp-content/uploads/2020/09/alain-1.jpg")
-        val samanta = User(2, "Samanta", "Meza", "https://upload.wikimedia.org/wikipedia/commons/b/b2/Samanta_villar.jpg")
-        val javier = User(3, "Javier", "Gómez", "https://live.staticflickr.com/974/42098804942_b9ce35b1c8_b.jpg")
-        val emma = User(4, "Emma", "Cruz", "https://upload.wikimedia.org/wikipedia/commons/d/d9/Emma_Wortelboer_%282018%29.jpg")
+        val alain   = User (1, "Alain",   "Nicolás", "https://frogames.es/wp-content/uploads/2020/09/alain-1.jpg"                         )
+        val samanta = User (2, "Samanta", "Meza",    "https://upload.wikimedia.org/wikipedia/commons/b/b2/Samanta_villar.jpg"             )
+        val javier  = User (3, "Javier",  "Gómez",   "https://live.staticflickr.com/974/42098804942_b9ce35b1c8_b.jpg"                     )
+        val emma    = User (4, "Emma",    "Cruz",    "https://upload.wikimedia.org/wikipedia/commons/d/d9/Emma_Wortelboer_%282018%29.jpg" )
 
         users.add(alain)
         users.add(samanta)
@@ -57,9 +59,4 @@ class MainActivity : AppCompatActivity(), OnClickListener {
         return users
     }
 
-    override fun onClick(user: User, position: Int) {
-        Toast.makeText(this, "$position: " + user.name, Toast.LENGTH_SHORT).show()
-
-
-    }
 }
