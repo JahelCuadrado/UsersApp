@@ -1,7 +1,6 @@
 package com.example.usersapp
 
 import android.content.Context
-import android.content.DialogInterface
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
@@ -42,7 +41,8 @@ class MainActivity : AppCompatActivity() {
             MaterialAlertDialogBuilder(this)  //cuadro de dialogo personalizado
                 .setTitle("Bienvenido!!")
                 .setView(dialogView)
-                .setPositiveButton("Registrar", DialogInterface.OnClickListener { dialogInterface, i ->
+                .setCancelable(false)
+                .setPositiveButton("Registrar"){ _, _ ->
 
                     val username = dialogView.findViewById<TextInputEditText>(R.id.et_username).text.toString()  //guardamos en una variable el texto introducido
 
@@ -51,12 +51,18 @@ class MainActivity : AppCompatActivity() {
                         putString ("username"  , username) //guardamos en la preference el valor intrudicido, con la clave username.
                             .apply()  //aplicar los cambios
                     }
-                })
-                .setNegativeButton("Cancelar", null)
+                    Toast.makeText(this, "Gracias por registrarte $username", Toast.LENGTH_SHORT).show()
+                }
+                .setNegativeButton("Cancelar") { _, _ ->
+                    with(preferences.edit()){
+                        putBoolean("first_time", true)
+                            .apply()  //aplicar los cambios
+                    }
+                }
                 .show()
         }else{
             val username = preferences.getString("username", "Nose")
-            Toast.makeText(this, "Bienvenido $username", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Bienvenido $username", Toast.LENGTH_SHORT).show()
         }
     }
 
@@ -74,7 +80,7 @@ class MainActivity : AppCompatActivity() {
 
 
     private fun eventClicRecycler(user: User, position: Int){
-        Toast.makeText(this, "${position+1}: " + user.name, Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "${position+1}: " + user.name, Toast.LENGTH_SHORT).show()
     }
 
 

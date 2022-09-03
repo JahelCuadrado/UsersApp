@@ -9,7 +9,7 @@
     <com.google.android.material.textfield.TextInputLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Nombre de usuario"
+        android:hint="@string/nombre_de_usuario"
         app:helperText="Obligatorio"
         app:counterEnabled="true"
         app:counterMaxLength="20"

@@ -28,16 +28,16 @@ class UserAdapter(
         holder: ViewHolder,
         position: Int
     ) {  //Este metodo actua casi como un for recorriendo todas las posiciones de la lista
-        val user = users.get(position)
+        val user = users[position]
         holder.bind(user, position)
 
 
-        holder.itemView.setOnClickListener { //asignamos evento de click  //TODO
+        holder.itemView.setOnClickListener { //  asignamos evento de click
             listener(user, position)
         }
     }
 
-    override fun getItemCount(): Int { //devuelve el tamaño de la lista para que el recycler sepa cuando no hay mas elementos que mostrar
+    override fun getItemCount(): Int { //  devuelve el tamaño de la lista para que el recycler sepa cuando no hay mas elementos que mostrar
         return users.size
     }
 
@@ -46,10 +46,11 @@ class UserAdapter(
     inner class ViewHolder(private val binding: ItemUserBinding) :
         RecyclerView.ViewHolder(binding.root) { //vinculamos la vista al adaptador
 
+
         fun bind(user: User, position: Int) {
-            with(binding) {  //vinculamos los datos de nuestro objeto con los elementos de la vista plantilla
-                tvOrder.text = ( position + 1 ).toString()
-                tvName.text = user.name + " " + user.lastname
+            with(binding) {  //  vinculamos los datos de nuestro objeto con los elementos de la vista plantilla
+                ( position + 1 ).toString().also { tvOrder.text = it }       //  tvOrder.text = ( position + 1 ).toString()
+                (user.name + " " + user.lastname).also { tvName.text = it }  //  tvName.text = user.name + " " + user.lastname
                 Glide.with(context)
                     .load(user.url)
                     .diskCacheStrategy(DiskCacheStrategy.ALL)

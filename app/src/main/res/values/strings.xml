@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">UsersApp</string>
     <string name="sp_first_time">first_time</string>
+    <string name="nombre_de_usuario">Nombre de usuario</string>
 </resources>
